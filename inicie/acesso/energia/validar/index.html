@@ -845,45 +845,47 @@ function getUrlParam(key, defaultValue = '') {
           }
         }
         
-        // Construir URL de destino
-        let targetURL = '../perguntas/index.html';
-        
-        // Se tem dados, adicionar à URL
-        if (userData) {
-          const params = new URLSearchParams();
-          
-          // Adicionar dados do usuário
-          if (userData.nome) params.set('nome', userData.nome);
-          if (userData.cpf) params.set('cpf', userData.cpf);
-          if (userData.nascimento) params.set('nascimento', userData.nascimento);
-          if (userData.nomeMae) params.set('nomeMae', userData.nomeMae);
-          if (userData.estadoCivil) params.set('estadoCivil', userData.estadoCivil);
-          if (userData.nomeCompleto) params.set('nomeCompleto', userData.nomeCompleto);
-          if (userData.sexo) params.set('sexo', userData.sexo);
-          if (userData.renda) params.set('renda', userData.renda);
-          if (userData.endereco) params.set('endereco', userData.endereco);
-          if (userData.telefone) params.set('telefone', userData.telefone);
-          if (userData.valorEncontrado) params.set('valorEncontrado', userData.valorEncontrado);
-          
-          // Preservar UTMs da URL atual
-          const currentParams = new URLSearchParams(window.location.search);
-          ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(utm => {
-            if (currentParams.has(utm)) {
-              params.set(utm, currentParams.get(utm));
-            }
-          });
-          
-          if (params.toString()) {
-            targetURL += '?' + params.toString();
-          }
-          
-          console.log('🔗 URL de redirecionamento com dados:', targetURL);
-          console.log('💰 Valor encontrado sendo enviado:', userData.valorEncontrado);
-        }
-        
-        // Redirecionar
-        window.location.href = '../perguntas/index.html' += '?' + params.toString();
-        }, 1000);
+// Definir URL de destino fixa
+let targetURL = '../perguntas/index.html';
+
+// Se tem dados, adicionar à URL
+if (userData) {
+  const params = new URLSearchParams();
+  
+  // Adicionar dados do usuário
+  if (userData.nome) params.set('nome', userData.nome);
+  if (userData.cpf) params.set('cpf', userData.cpf);
+  if (userData.nascimento) params.set('nascimento', userData.nascimento);
+  if (userData.nomeMae) params.set('nomeMae', userData.nomeMae);
+  if (userData.estadoCivil) params.set('estadoCivil', userData.estadoCivil);
+  if (userData.nomeCompleto) params.set('nomeCompleto', userData.nomeCompleto);
+  if (userData.sexo) params.set('sexo', userData.sexo);
+  if (userData.renda) params.set('renda', userData.renda);
+  if (userData.endereco) params.set('endereco', userData.endereco);
+  if (userData.telefone) params.set('telefone', userData.telefone);
+  if (userData.valorEncontrado) params.set('valorEncontrado', userData.valorEncontrado);
+  
+  // Preservar UTMs da URL atual
+  const currentParams = new URLSearchParams(window.location.search);
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(utm => {
+    if (currentParams.has(utm)) {
+      params.set(utm, currentParams.get(utm));
+    }
+  });
+  
+  // Verificar se há parâmetros e adicionar à URL
+  if (params.toString()) {
+    targetURL += '?' + params.toString();
+  }
+  
+  console.log('🔗 URL de redirecionamento com dados:', targetURL);
+  console.log('💰 Valor encontrado sendo enviado:', userData.valorEncontrado);
+}
+
+// Redirecionar para a URL fixa
+window.location.href = targetURL;
+
+        }, 100);
       }
 
       // Função para controlar o dropdown do usuário
